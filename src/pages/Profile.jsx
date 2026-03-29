@@ -39,7 +39,7 @@ export default function Profile() {
     try{
        setFileUploadError(false);
        setFilePerc(0);
-       const fileExt=file.name.split(",").pop();
+       const fileExt=file.name.split(".").pop();
        const fileName=`${currentuser._id}-${Date.now()}.${fileExt}`;
        setFilePerc(30);
        const {error}=await supabase.storage
