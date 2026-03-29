@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 export default function Profile() {
   const {currentuser,loading,error}=useSelector(state=>state.user)
   // console.log("CURRENT USER:", currentuser);
-  console.log("USER ID:", currentuser.id);
-  console.log("USER _ID:", currentuser._id);
+  console.log("USER ID:", currentuser?.id);
+  console.log("USER _ID:", currentuser?._id);
   const fileref=useRef(null);
   const [filePerc,setFilePerc]=useState(0);
   const [fileUploadError,setFileUploadError]=useState(false);
@@ -34,6 +34,15 @@ export default function Profile() {
       });
     }
   }, [currentuser]);
+
+  if (!currentuser) {
+    return (
+      <div className='p-6 max-w-lg mx-auto text-center'>
+        <h2 className='text-2xl font-semibold'>Loading profile...</h2>
+        <p>Please wait while we restore your session.</p>
+      </div>
+    );
+  }
 
   const handleFileUpload=async(file)=>{
     try{
@@ -161,7 +170,7 @@ const hanlelistingDelete=async (listingid)=>{
       <h1 className='text-3xl font-semibold text-center'>Profile</h1>
       <form className='flex flex-col gap-4' onSubmit={handlesubmit} >
         <input type='file' ref={fileref} hidden accept='image/*' onChange={(e)=>{handleFileUpload(e.target.files[0])}}/>
-        <img  onClick={()=>{fileref.current.click()}} src={formData.avatar||currentuser.avatar} alt='profile' className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'/>
+        <img  onClick={()=>{fileref.current.click()}} src={formData.avatar||currentuser?.avatar} alt='profile' className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'/>
         <p>
           {fileUploadError?(
             <span className="text-red-700">
