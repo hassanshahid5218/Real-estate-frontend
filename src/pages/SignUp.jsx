@@ -24,22 +24,26 @@ export default function SignUp() {
     e.preventDefault();
     try{
     dispatch(signinStart());
-    const res=await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`,{
-      method:'POST',
-      headers:{
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
         'Content-Type': 'application/json',
       },
-      body:JSON.stringify(formdata)
-    }
-    );
-    const data=await res.json();
+      body: JSON.stringify(formdata),
+    });
+
+    const data = await res.json();
     console.log(data);
-    if(data.Success===false){
-          dispatch(signinfailure(data.message))
-          return;
-        }
-        dispatch(signinSuccsess(data))
-        navigate('/sign-in')
+
+    if (!res.ok || data.success === false) {
+      const message = data.msg || data.message || 'Unable to sign up';
+      dispatch(signinfailure(message));
+      return;
+    }
+
+    dispatch(signinSuccsess(data.user || null));
+    navigate('/sign-in');
   }
 catch(error){
      dispatch(signinfailure(error.message))

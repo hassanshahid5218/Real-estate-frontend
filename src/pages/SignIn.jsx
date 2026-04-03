@@ -23,21 +23,26 @@ export default function Signin() {
     e.preventDefault();
     try{
     dispatch(signinStart());
-    const res=await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signin`,{
-      method:'POST',
-      headers:{
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signin`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
         'Content-Type': 'application/json',
-      },      credentials:'include',      body:JSON.stringify(formdata)
-    }
-    );
-    const data=await res.json();
+      },
+      body: JSON.stringify(formdata),
+    });
+
+    const data = await res.json();
     console.log(data);
-    if(data.Success===false){
-     dispatch(signinfailure(data.message))
+
+    if (!res.ok || data.success === false) {
+      const message = data.msg || data.message || 'Invalid email or password';
+      dispatch(signinfailure(message));
       return;
     }
-    dispatch(signinSuccsess(data))
-    navigate('/')
+
+    dispatch(signinSuccsess(data.user || data));
+    navigate('/');
   }
   catch(error){
      dispatch(signinfailure(error.message))
