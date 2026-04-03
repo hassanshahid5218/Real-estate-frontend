@@ -29,7 +29,7 @@ export default function OAuth() {
         });
         const data=await res.json();
         console.log(data)
-        dispatch(signinSuccsess(data))
+        dispatch(signinSuccsess(data.user || data))
         navigate('/')
 
     }
