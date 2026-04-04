@@ -12,7 +12,17 @@ export default function Listingitem({listing}) {
       <div className='p-3 flex flex-col gap-2 w-full'>
         <p className='text-lg font-semibold text-slate-700 truncate'>{listing.name}</p>
         <p className='text-sm text-gray-600 line-clamp-2'>{listing.description}</p>
-        <p className='text-slate-700 font-semibold'>${listing.offer ? listing.discountprice.toLocaleString('en-US') : listing.regularprice.toLocaleString('en-US')}{listing.type === 'rent' && ' / month'}</p>
+        <p className='text-slate-700 font-semibold'>
+            {(listing.offer
+              ? listing.discountprice
+              : listing.regularprice
+            ).toLocaleString('en-PK', {
+              style: 'currency',
+              currency: 'PKR',
+              maximumFractionDigits: 0,
+            })}
+            {listing.type === 'rent' && ' / month'}
+         </p>
         <div className='text-slate-700 flex gap-4'>
           <div className='flex items-center gap-1'>
             <FaBed className='text-lg' />

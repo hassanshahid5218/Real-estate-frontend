@@ -160,7 +160,7 @@ const handleformsubmit=async (e)=>{
     
     <form onSubmit={handleformsubmit} className='flex flex-col sm:flex-row gap-4'>
       <div className='flex flex-col gap-4 flex-1  ' >
-        <input type='text' placeholder='Enter Your Name' className='border border-black p-3 rounded-lg' id='name' maxLength='62' minLength='10' required onChange={handlechange} value={formData.name}/>
+        <input type='text' placeholder='Name' className='border border-black p-3 rounded-lg' id='name' maxLength='62' minLength='10' required onChange={handlechange} value={formData.name}/>
         <input type='text' placeholder='Description' className='border border-black p-3 rounded-lg' id='description'  required onChange={handlechange} value={formData.description}/>
         <input type='text' placeholder='Address' className='border border-black p-3 rounded-lg' id='address' required onChange={handlechange} value={formData.address}/>
       
